@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/chriss-de/httpdirfs/dirlist"
 	"net/http"
 
 	"github.com/chriss-de/httpdirfs"
@@ -16,9 +17,9 @@ func main() {
 func serve() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		//httpDir, err := httpdirfs.NewHttpDirFs("/", httpdirfs.WithDirectoryListing(dirlist.NewHtmlDirectoryListing()))
-		//httpDir, err := httpdirfs.NewHttpDirFs("/", httpdirfs.WithDirectoryListing(dirlist.NewJsonDirectoryListing()))
+		httpDir, err := httpdirfs.NewHttpDirFs("/", httpdirfs.WithDirectoryListing(dirlist.NewJsonDirectoryListing()))
 		//httpDir, err := httpdirfs.NewHttpDirFs("/", httpdirfs.WithDirectoryListing(&dirlist.DefaultGolangListing{}))
-		httpDir, err := httpdirfs.NewHttpDirFs("/")
+		//httpDir, err := httpdirfs.NewHttpDirFs("/")
 		if err != nil {
 			panic(err)
 		}

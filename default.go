@@ -1,4 +1,4 @@
-package dirlist
+package httpdirfs
 
 import "net/http"
 

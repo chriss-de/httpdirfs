@@ -1,7 +1,6 @@
 package httpdirfs
 
 import (
-	"github.com/chriss-de/httpdirfs/dirlist"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -71,7 +70,7 @@ func (hdf *HttpDirFs) tryOpen(fileNames ...string) (fd http.File, err error) {
 			// golang net/http tries for /index.html if `fd` is a directory
 			case os.IsNotExist(err) && strings.HasSuffix(filename, "/index.html") && hdf.directoryListing != nil:
 				switch hdf.directoryListing.(type) {
-				case *dirlist.DefaultGolangListing:
+				case *DefaultGolangListing:
 					return nil, err
 				default:
 					return hdf.directoryListing.List(filename)
