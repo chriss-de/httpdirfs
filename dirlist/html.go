@@ -52,7 +52,7 @@ func (hdfl *HttpDirFsListingHTML) List(dirName string) (fd http.File, err error)
 			name += "/"
 		}
 		u := url.URL{Path: name}
-		result.output.WriteString(fmt.Sprintf("<a href=\"%s\" %s</a>\n", u.String(), htmlReplacer.Replace(name)))
+		result.output.WriteString(fmt.Sprintf("<a href=\"%s\">%s</a>\n", u.String(), htmlReplacer.Replace(name)))
 	}
 	result.output.WriteString("</pre>\n")
 
