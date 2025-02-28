@@ -66,7 +66,7 @@ func (r *HttpDirFsListingHTMLResult) Seek(offset int64, whence int) (int64, erro
 	result := bytes.NewReader(r.output.Bytes())
 	return result.Seek(offset, whence)
 }
-func (r *HttpDirFsListingHTMLResult) Readdir(count int) ([]fs.FileInfo, error) {
+func (r *HttpDirFsListingHTMLResult) Readdir(int) ([]fs.FileInfo, error) {
 	return nil, os.ErrInvalid
 }
 func (r *HttpDirFsListingHTMLResult) Stat() (os.FileInfo, error) {

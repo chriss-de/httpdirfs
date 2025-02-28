@@ -1,10 +1,9 @@
 package main
 
 import (
-	"github.com/chriss-de/httpdirfs.v1/dirlist"
 	"net/http"
 
-	"github.com/chriss-de/httpdirfs.v1"
+	"github.com/chriss-de/httpdirfs"
 )
 
 func main() {
@@ -17,9 +16,9 @@ func main() {
 func serve() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		//fs := http.FileServer(httpdirfs.NewHttpDirFs("/", httpdirfs.WithDirectoryListing(dirlist.NewHtmlDirectoryListing())))
-		fs := http.FileServer(httpdirfs.NewHttpDirFs("/", httpdirfs.WithDirectoryListing(dirlist.NewJsonDirectoryListing())))
+		//fs := http.FileServer(httpdirfs.NewHttpDirFs("/", httpdirfs.WithDirectoryListing(dirlist.NewJsonDirectoryListing())))
 		//fs := http.FileServer(httpdirfs.NewHttpDirFs("/", httpdirfs.WithDirectoryListing(&httpdirfs.DefaultGolangListing{})))
-		//fs := http.FileServer(httpdirfs.NewHttpDirFs("/"))
+		fs := http.FileServer(httpdirfs.NewHttpDirFs("/"))
 		fs.ServeHTTP(w, r)
 	})
 }

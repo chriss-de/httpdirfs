@@ -20,7 +20,7 @@ type HttpDirFsListing interface {
 
 type DefaultGolangListing struct{}
 
-func (d *DefaultGolangListing) List(root string) (http.File, error) { return nil, nil }
+func (d *DefaultGolangListing) List(string) (http.File, error) { return nil, nil }
 
 func NewHttpDirFs(rootPath string, opts ...func(hdf *HttpDirFs)) (hdf *HttpDirFs) {
 	hdf = &HttpDirFs{rootPath: rootPath}

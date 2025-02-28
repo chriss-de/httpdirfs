@@ -62,7 +62,7 @@ func (r *HttpDirFsListingJSONResult) Seek(offset int64, whence int) (int64, erro
 	result := bytes.NewReader(r.output.Bytes())
 	return result.Seek(offset, whence)
 }
-func (r *HttpDirFsListingJSONResult) Readdir(count int) ([]fs.FileInfo, error) {
+func (r *HttpDirFsListingJSONResult) Readdir(int) ([]fs.FileInfo, error) {
 	return nil, os.ErrInvalid
 }
 func (r *HttpDirFsListingJSONResult) Stat() (os.FileInfo, error) {
