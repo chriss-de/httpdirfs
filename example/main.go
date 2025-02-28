@@ -15,10 +15,15 @@ func main() {
 
 func serve() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		//fs := http.FileServer(httpdirfs.NewHttpDirFs("/", httpdirfs.WithDirectoryListing(dirlist.NewHtmlDirectoryListing())))
-		//fs := http.FileServer(httpdirfs.NewHttpDirFs("/", httpdirfs.WithDirectoryListing(dirlist.NewJsonDirectoryListing())))
-		//fs := http.FileServer(httpdirfs.NewHttpDirFs("/", httpdirfs.WithDirectoryListing(&httpdirfs.DefaultGolangListing{})))
-		fs := http.FileServer(httpdirfs.NewHttpDirFs("/"))
+		//httpDir, err := httpdirfs.NewHttpDirFs("/", httpdirfs.WithDirectoryListing(dirlist.NewHtmlDirectoryListing()))
+		//httpDir, err := httpdirfs.NewHttpDirFs("/", httpdirfs.WithDirectoryListing(dirlist.NewJsonDirectoryListing()))
+		//httpDir, err := httpdirfs.NewHttpDirFs("/", httpdirfs.WithDirectoryListing(&dirlist.DefaultGolangListing{}))
+		httpDir, err := httpdirfs.NewHttpDirFs("/")
+		if err != nil {
+			panic(err)
+		}
+
+		fs := http.FileServer(httpDir)
 		fs.ServeHTTP(w, r)
 	})
 }

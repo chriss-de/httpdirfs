@@ -1,6 +1,7 @@
 package httpdirfs
 
 import (
+	"github.com/chriss-de/httpdirfs/dirlist"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -18,18 +19,19 @@ type HttpDirFsListing interface {
 	List(string) (http.File, error)
 }
 
-type DefaultGolangListing struct{}
+func NewHttpDirFs(rootPath string, opts ...func(hdf *HttpDirFs)) (hdf *HttpDirFs, err error) {
+	absRootPath, err := filepath.Abs(rootPath)
+	if err != nil {
+		return nil, err
+	}
 
-func (d *DefaultGolangListing) List(string) (http.File, error) { return nil, nil }
-
-func NewHttpDirFs(rootPath string, opts ...func(hdf *HttpDirFs)) (hdf *HttpDirFs) {
-	hdf = &HttpDirFs{rootPath: rootPath}
+	hdf = &HttpDirFs{rootPath: absRootPath}
 
 	for _, opt := range opts {
 		opt(hdf)
 	}
 
-	return hdf
+	return hdf, nil
 }
 
 func WithDirectoryListing(dl HttpDirFsListing) func(lfs *HttpDirFs) {
@@ -69,7 +71,7 @@ func (hdf *HttpDirFs) tryOpen(fileNames ...string) (fd http.File, err error) {
 			// golang net/http tries for /index.html if `fd` is a directory
 			case os.IsNotExist(err) && strings.HasSuffix(filename, "/index.html") && hdf.directoryListing != nil:
 				switch hdf.directoryListing.(type) {
-				case *DefaultGolangListing:
+				case *dirlist.DefaultGolangListing:
 					return nil, err
 				default:
 					return hdf.directoryListing.List(filename)
