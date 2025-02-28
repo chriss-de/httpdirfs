@@ -34,6 +34,7 @@ func (list *HttpDirFsListingJSON) List(dirName string) (fd http.File, err error)
 	result.output = new(bytes.Buffer)
 	result.output.WriteString(`{`)
 	result.output.WriteString(`"fileCount":` + strconv.Itoa(len(result.dirContents)) + `,`)
+	result.output.WriteString(`"directory":"` + dirName + `",`)
 	result.output.WriteString(`"files":[`)
 	for idx, dc := range result.dirContents {
 		name := dc.Name()
@@ -45,7 +46,15 @@ func (list *HttpDirFsListingJSON) List(dirName string) (fd http.File, err error)
 		if err != nil {
 			return nil, err
 		}
-		result.output.WriteString(fmt.Sprintf(`{"name":"%s","type":"%s","size":%d}`, name, fileType, dcInfo.Size()))
+		result.output.WriteString(
+			fmt.Sprintf(`{"name":"%s","type":"%s","mode":"%s","size":%d,"mtime":"%s"}`,
+				name,
+				fileType,
+				dc.Type().String(),
+				dcInfo.Size(),
+				dcInfo.ModTime().Format(time.RFC3339),
+			),
+		)
 		if idx < len(result.dirContents)-1 {
 			result.output.WriteString(",")
 		}
