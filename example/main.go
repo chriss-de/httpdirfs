@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/chriss-de/httpdirfs/dirlist"
 	"net/http"
 
 	"github.com/chriss-de/httpdirfs"
+	dirlist "github.com/chriss-de/httpdirfs/dirlist"
 )
 
 func main() {
